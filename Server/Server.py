@@ -7,9 +7,6 @@ messages_handler = MessagesHandler()
 app = Flask(__name__)
 
 
-# api = App(app)
-# api.run()
-
 @app.route('/')
 def hello():
     return "hello"
@@ -31,14 +28,14 @@ def AddMessage():
     if added:
         return '200'
     else:
-        abort(500, description="request.args is incorrect")
+        abort(400, description="request.args is incorrect")
 
 
 @app.route('/GetMessage', methods=['GET'])
 def GetMessage():
     messages = None
     if len(request.args) == 0 or len(request.args) > 1:
-        abort(500, description="request.args is incorrect")
+        abort(400, description="request.args is incorrect")
     if request.args.__contains__("applicationId"):
         messages = messages_handler.get_messages_by_application_id(request.args["applicationId"])
     if request.args.__contains__("sessionId"):
@@ -49,13 +46,13 @@ def GetMessage():
     if messages is not None:
         return messages
     else:
-        abort(500, description="request.args is incorrect")
+        abort(400, description="request.args is incorrect")
 
 
 @app.route('/DeleteMessage', methods=['DELETE'])
 def DeleteMessage():
     if len(request.args) == 0 or len(request.args) > 1:
-        abort(500, description="request.args is incorrect")
+        abort(400, description="request.args is incorrect")
     deleted = False
     if request.args.__contains__("applicationId"):
         messages_handler.delete_message_by_application_id(request.args["applicationId"])
@@ -70,4 +67,4 @@ def DeleteMessage():
     if deleted:
         return '200'
     else:
-        abort(500, description="request.args is incorrect")
+        abort(400, description="request.args is incorrect")

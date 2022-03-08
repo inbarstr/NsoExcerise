@@ -26,7 +26,7 @@ class MessagesHandler(object):
             self.add_to_dictionary(self.session_messages, message.get_session_id(), message)
             self.messages[message.get_message_id()] = message
         else:
-            raise abort(404, "message_id = " + message.get_message_id() + " already exist")
+            raise abort(409, "message_id = " + message.get_message_id() + " already exist")
         print("message added")
 
     def add_to_dictionary(self, my_dictionary, key, message):
